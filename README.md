@@ -11,8 +11,12 @@
       - [2.2 Accessibility \& Usage of Data](#22-accessibility--usage-of-data)
       - [2.3 Data Limitations \& Integrity](#23-data-limitations--integrity)
     - [2.4 Tools and Methodologies](#24-tools-and-methodologies)
+      - [Tools:](#tools)
   - [3. Prepare Phase](#3-prepare-phase)
-  - [4. Process and Analyse Phase](#4-process-and-analyse-phase)
+      - [3.1 Data Preparation](#31-data-preparation)
+      - [3.2 Data cleaning](#32-data-cleaning)
+      - [3.2 Data Normalization](#32-data-normalization)
+      - [3.3 Data Transformation](#33-data-transformation)
 
 ## 1. Introduction: 
 #### 1.1 Company Background
@@ -43,7 +47,7 @@ The data source used for this Project is https://www.kaggle.com/datasets/shilong
 This public dataset is completely available on the Maven Analytics website platform where it stores and consolidates all available datasets for analysis in the Data Playground. The specific individual datasets at hand can be obtained at this link below: https://www.mavenanalytics.io/blog/maven-pizza-challenge
 
 #### 2.3 Data Limitations & Integrity
-This Pizza Sales dataset contains 12 columns:
+This Pizza Sales dataset contains 12 columns and a total of 48620 records:
 - **order_id**: Unique identifier for each order placed by a table.
 - **order_details_id**: Unique identifier for each order placed by a table.
 - **pizza_id**: Unique key identifier that ties the pizza ordered to its details, like size and price.
@@ -56,6 +60,7 @@ This Pizza Sales dataset contains 12 columns:
 - **pizza_type**: Unique key identifier that ties the pizza ordered to its details, like size and price.
 - **pizza_ingredients**: Ingredients used in the pizza as shown in the menu (they all include Mozzarella Cheese, even if not specified; and they all include Tomato Sauce, unless another sauce is specified).
 
+
 The data is clean and well-maintained but somewhat limited:
 
 There is not enough information to conduct an in-depth Inventory Analysis which provides real-time insights into inventory levels, stock movements, and related metrics that help to optimize supply chain operations and minimize costs which can ensure efficient stock levels.
@@ -63,10 +68,141 @@ There is not enough information to conduct an in-depth Inventory Analysis which 
 There is also no Customer information for Customer Segmentation Analysis, a process of dividing a company's customers into groups based on shared characteristics to better tailor marketing and sales efforts.
 
 ### 2.4 Tools and Methodologies
-SQL which be used to create a database Schema.
+#### Tools:
+- MYSQL Workbench is the tool that will be used to create a database Schema for the Pizza Restaurant Sales dataset.
+Here we will take the appropriate cleaning procedures if necessary and normalise the data.
+Once the data preparation process is taken care of we will undergo Exploratory Data Analysis (EDA) by querying the data to gain valuable insights.
+
+- POWER BI will be used for visualizations and to build a Dashboard
 
 Data analysis was conducted using Python for statistical computations and Tableau for visualizations. The methodologies included correlation analysis, linear regression, and cluster analysis to identify patterns and draw insights.
 
 ## 3. Prepare Phase
+#### 3.1 Data Preparation 
+We start off by creating a new database called **pizza_db** in MYSQL and import the relevant csv file in which all 48620 records were successfully imported.
+- One thing to note is that the **order_date** and **order_time** columns are set as **TEXT** datatypes.
+- The Second thing to note is that **unit_price** and **total_price** columns are set as **DOUBLE** datatype.
 
-## 4. Process and Analyse Phase
+#### 3.2 Data cleaning
+As mentioned before the data is clean and well-maintained, there is not duplicates or empty values,
+so we begin by standardizing the data:
+
+Firstly we set the **order_date** and **order_time** columns into the standard format MYSQL uses,
+and then we correct the datatype from **TEXT** to **DATE/TIME**.
+
+Secondly, we set the **unit_price** and **total_price** columns as **DECIMAL** datatype.
+
+```SQL
+-- 2.STANDARDIZE DATA
+UPDATE pizza_sales SET order_date = STR_TO_DATE(order_date, '%d/%m/%Y');
+ALTER TABLE pizza_sales MODIFY order_date DATE;
+
+UPDATE pizza_sales SET order_time = STR_TO_DATE(order_time, '%H:%i:%s');
+ALTER TABLE pizza_sales MODIFY order_time TIME;
+
+ALTER TABLE pizza_sales MODIFY unit_price DECIMAL(10, 2);
+ALTER TABLE pizza_sales MODIFY total_price DECIMAL(10, 2);
+```
+#### 3.2 Data Normalization
+WE organize the data into multiple related tables to reduce redundancy and improve data integrity.
+
+1. Order Table: Tracks order information, like date and time.
+2. Order Details Table: Links specific pizzas to an order, including quantity and prices.
+3. Pizza Table: Stores pizza-specific details such as size, type, and ingredients.
+
+```sql
+CREATE TABLE Orders (
+    order_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    order_date DATE NOT NULL,
+    order_time TIME NOT NULL
+);
+
+CREATE TABLE OrderDetails (
+    order_details_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    order_id INT NOT NULL,
+    pizza_id INT NOT NULL,
+    quantity INT NOT NULL,
+    unit_price DECIMAL(10, 2) NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (pizza_id) REFERENCES Pizzas(pizza_id)
+);
+
+CREATE TABLE Pizzas (
+    pizza_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    pizza_size VARCHAR(50) NOT NULL,
+    pizza_category VARCHAR(100) NOT NULL,
+    pizza_ingredients TEXT NOT NULL
+);
+```
+
+<details>
+<summary>And then insert the data into the corresponding tables:
+</summary>
+
+```sql
+INSERT INTO Orders (order_date, order_time)
+SELECT order_date, order_time
+FROM pizza_sales;
+
+INSERT INTO OrderDetails (order_id, pizza_id, quantity, unit_price, total_price)
+SELECT 
+    o.order_id, 
+    p.pizza_id, 
+    ps.quantity, 
+    ps.unit_price,
+    ps.total_price
+FROM pizza_sales ps
+JOIN Orders o ON ps.order_details_id = o.order_id
+JOIN Pizzas p ON ps.order_details_id = p.pizza_id;
+
+INSERT INTO Pizzas (pizza_size, pizza_category, pizza_ingredients)
+SELECT pizza_size, pizza_category, pizza_ingredients
+FROM pizza_sales;
+```
+
+</details>
+
+#### 3.3 Data Transformation
+<details>
+<summary>In this section we fine-tune the data for visualization and analysis purposes.
+</summary>
+
+```sql
+-- 4.TRANSFORM DATA
+-- Rename values for visualization purposes
+UPDATE Pizzas
+SET pizza_size =
+	CASE
+		WHEN pizza_size = 'S' THEN 'Small'
+        WHEN pizza_size = 'M' THEN 'Medium'
+        WHEN pizza_size = 'L' THEN 'Large'
+        WHEN pizza_size = 'XL' THEN 'XLarge'
+        WHEN pizza_size = 'XXL' THEN 'XXLarge'
+	END;
+
+-- Add days_of_week column to Orders
+ALTER TABLE Orders
+ADD COLUMN days_of_week VARCHAR(20);
+
+UPDATE Orders
+SET days_of_week = DAYNAME(order_date)
+WHERE order_id IS NOT NULL;
+
+-- Add times_of_day column to Oorders
+ALTER TABLE orders
+ADD COLUMN times_of_day VARCHAR(20);
+
+UPDATE Orders
+SET times_of_day = (
+	CASE 
+		WHEN order_time BETWEEN '00:00:00' AND '11:59:59' THEN 'Morning' 
+		WHEN order_time BETWEEN '12:00:00' AND '14:59:59' THEN 'Lunch'
+		WHEN order_time BETWEEN '15:00:00' AND '17:59:59' THEN 'Afternoon' 
+		WHEN order_time BETWEEN '18:00:00' AND '20:59:59' THEN 'Dinner'
+		WHEN order_time BETWEEN '21:00:00' AND '23:59:59' THEN 'Late Evening' 
+	END)
+WHERE order_id IS NOT NULL;
+```
+</details>
+
