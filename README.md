@@ -172,15 +172,15 @@ JOIN Pizzas p ON ps.order_details_id = p.pizza_id;
 
 **Order table:**
 
-![alt text](<SQL queries/assets/order_table.png>)
+![alt text](assets/order_table.png)
 
 **Pizza table:**
 
-![alt text](<SQL queries/assets/pizza_table.png>)
+![alt text](assets/pizza_table.png)
 
 **Orderdetails table:**
 
-![alt text](<SQL queries/assets/orderdetail_table.png>)
+![alt text](assets/orderdetail_table.png)
 
 
 #### 3.3 Data Transformation
