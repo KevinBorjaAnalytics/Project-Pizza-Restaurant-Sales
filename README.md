@@ -253,7 +253,7 @@ GROUP BY days_of_week
 ORDER BY total_orders DESC;
 ```
 
-![alt text](<SQL queries/assets/1_busiest_days.png>)
+![alt text](assets/1_busiest_days.png)
 
 **Insight:**
 Friday appears to be the busiest day throughout the year and
@@ -274,7 +274,7 @@ GROUP BY hour_of_day
 ORDER BY total_orders DESC;
 ```
 
-![alt text](<SQL queries/assets/1_busiest_times.png>)
+![alt text](assets/1_busiest_times.png)
 
 **Insight:**
 12 PM is busiest Time throughout the year and
@@ -296,7 +296,7 @@ GROUP BY days_of_week, hour_of_day
 ORDER BY total_orders DESC;
 ```
 
-![alt text](<SQL queries/assets/1_busiest_day_and_time.png>)
+![alt text](assets/1_busiest_day_and_time.png)
 
 **Insight:**
 Thursday at 12 PM is the busiest Time throughout the year and 
@@ -315,14 +315,14 @@ FROM orders
 GROUP BY months
 ORDER BY total_orders DESC;
 ```
-![alt text](<SQL queries/assets/1_busiest_month.png>)
+![alt text](assets/1_busiest_month.png)
 
 **Insight:**
 Although July is the peak month for orders, there doesn't seem 
 to be a distinct seasonal pattern, as eight out of the twelve 
 months have recorded over 4,000 total orders.
 
-2. How many pizzas are we making during peak periods?
+1. How many pizzas are we making during peak periods?
 
 ```sql
 SELECT
@@ -334,12 +334,12 @@ GROUP BY times_of_day
 ORDER BY number_of_pizzas_sold DESC;
 ```
 
-![alt text](<SQL queries/assets/2_pizzas_made_peak_period.png>)
+![alt text](assets/2_pizzas_made_peak_period.png)
 
 **Insight:**
 Lunch time (12PM to 3 PM) peaks at the top with 16802 pizzas made.
 
-3. What are our best and worst-selling pizzas?
+1. What are our best and worst-selling pizzas?
 
 **Best Selling Pizzas:**
 
@@ -354,7 +354,7 @@ ORDER BY total_sold DESC
 LIMIT 5;
 ```
 
-![alt text](<SQL queries/assets/3_best_selling_pizza.png>)
+![alt text](assets/3_best_selling_pizza.png)
 
 **Insight:**
 Although the best selling pizza is the 'Classic Deluxe Pizza'
@@ -374,7 +374,7 @@ GROUP BY p.pizza_name
 ORDER BY total_sold ASC
 LIMIT 5;
 ```
-![alt text](<SQL queries/assets/3_worst_selling_pizza.png>)
+![alt text](assets/3_worst_selling_pizza.png)
 
 **Insight:**
 The 'Brie Carre Pizza' has consistently been the least popular 
@@ -382,7 +382,7 @@ option, with just 490 sold over the entire year. Additionally,
 the next four pizzas on the list have also struggled, 
 failing to reach the 1,000 pizza sales mark.
 
-4. What's our average order value?
+1. What's our average order value?
 
 ```sql
 SELECT 
@@ -392,7 +392,7 @@ FROM orderdetails od
 JOIN orders o ON od.order_id = o.order_id;
 ```
 
-![alt text](<SQL queries/assets/4_average_order_value.png>)
+![alt text](assets/4_average_order_value.png)
 
 **Insight:**
 The Average Order Value is 16.82. This appears to be on the lower
@@ -402,7 +402,7 @@ most expensive is 35.95, resulting in a difference of 26.20.
 It seems that customers typically order one pizza and often 
 opt for the more affordable options.
 
-5. How well are we utilizing our seating capacity? 
+1. How well are we utilizing our seating capacity? 
 (we have 15 tables and 60 seats)
 
 To undercover how effectively the seating capacity is being 
@@ -465,4 +465,3 @@ With 15 tables available and a total of 60 seats, it is
 reasonable to conclude that each table accommodates 4 people.
 It might be worthwhile to think about introducing additional 
 tables with 2 or 3 seats and removing a few tables with 4 seats.
-
