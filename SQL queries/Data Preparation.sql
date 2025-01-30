@@ -27,6 +27,14 @@ CREATE TABLE Orders (
     order_time TIME NOT NULL
 );
 
+CREATE TABLE Pizzas (
+    pizza_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    pizza_name VARCHAR(50) NOT NULL,
+    pizza_size VARCHAR(50) NOT NULL,
+    pizza_category VARCHAR(100) NOT NULL,
+    pizza_ingredients TEXT NOT NULL
+);
+
 CREATE TABLE OrderDetails (
     order_details_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
@@ -38,15 +46,12 @@ CREATE TABLE OrderDetails (
     FOREIGN KEY (pizza_id) REFERENCES Pizzas(pizza_id)
 );
 
-CREATE TABLE Pizzas (
-    pizza_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    pizza_size VARCHAR(50) NOT NULL,
-    pizza_category VARCHAR(100) NOT NULL,
-    pizza_ingredients TEXT NOT NULL
-);
-
 INSERT INTO Orders (order_date, order_time)
 SELECT order_date, order_time
+FROM pizza_sales;
+
+INSERT INTO Pizzas (pizza_name, pizza_size, pizza_category, pizza_ingredients)
+SELECT pizza_name, pizza_size, pizza_category, pizza_ingredients
 FROM pizza_sales;
 
 INSERT INTO OrderDetails (order_id, pizza_id, quantity, unit_price, total_price)
@@ -59,10 +64,6 @@ SELECT
 FROM pizza_sales ps
 JOIN Orders o ON ps.order_details_id = o.order_id
 JOIN Pizzas p ON ps.order_details_id = p.pizza_id;
-
-INSERT INTO Pizzas (pizza_size, pizza_category, pizza_ingredients)
-SELECT pizza_size, pizza_category, pizza_ingredients
-FROM pizza_sales;
 
 -- 4.TRANSFORM DATA
 -- Rename values for visualization purposes
@@ -84,7 +85,7 @@ UPDATE Orders
 SET days_of_week = DAYNAME(order_date)
 WHERE order_id IS NOT NULL;
 
--- Add times_of_day column to Oorders
+-- Add times_of_day column to Orders
 ALTER TABLE orders
 ADD COLUMN times_of_day VARCHAR(20);
 
@@ -98,6 +99,16 @@ SET times_of_day = (
 		WHEN order_time BETWEEN '21:00:00' AND '23:59:59' THEN 'Late Evening' 
 	END)
 WHERE order_id IS NOT NULL;
+
+# Add day_category column to Orders
+ALTER TABLE Orders
+ADD COLUMN day_category VARCHAR(20);
+
+UPDATE Orders
+SET day_category = CASE
+    WHEN days_of_week IN ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') THEN 'Weekday'
+    WHEN days_of_week IN ('Saturday', 'Sunday') THEN 'Weekend'
+END;
 
 -- 5. REMOVE UNNECESSARY DATA
 DROP TABLE pizza_sales;
