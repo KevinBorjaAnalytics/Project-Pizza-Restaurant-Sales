@@ -265,7 +265,7 @@ END;
 In this section we will be focusing on the main task of providing answers to the specific questions given by Plato's Pizza.
 
 #### 1. What days and times do we tend to be busiest?
-The metric used determine how busy the restaurant is, will be the number of total orders. 
+The metric used to determine how busy the restaurant is, will be the number of total orders. 
 
 ```SQL
 SELECT COUNT(order_id) AS total_orders FROM orders;
@@ -568,7 +568,7 @@ ORDER BY `month`;
 ![alt text](assets/revenue_by_month.png)
 
 **Insight:**
-There is no noticeable deviation from the average value (68.16k).
+There is no noticeable deviation from the average value ($68.16k).
 - **Strong Growth Period:** November had the highest growth at 9.95%
 - **Significant Drops:** December has the highest decline in revenue at -8.09%.
 
@@ -602,7 +602,7 @@ Diverse and evenly distributed revenue streams ensure that the company doesn’t
 *from Pizza Sales Dashboard*
 
 **Insight:**
-Large Pizzas contributes the most revenue at 375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only 1K (0.12%). 
+Large Pizzas contributes the most revenue at $375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only $1K (0.12%). 
 
 **Optimizing Large and Medium Sizes:** 
 Large and Medium size pizzas account for 76.38% of total revenue. This suggests that they are the most popular and may have higher price points.
@@ -643,17 +643,17 @@ can boost sales by providing festive-themed products or seasonal discounts, such
 
 - **Menu Expansion:** Introduce breakfast-friendly or late-night-friendly pizza options to increase demand during these periods.
 
-- There's also the opportunity to drive sales through combo deals to help upsell or cross-sell during peak hours.
+  - There's also the opportunity to drive sales through combo deals to help upsell or cross-sell during peak hours.
 
 - **Marketing & Promotions:** Running time-sensitive promotions during Peak times can help maximize sales by offering Lunch time or Dinner time discounts.
 
-- Consider targeted marketing for night-owls and early-birds to boost sales during Late-Evenings and Mornings.
+  - Consider targeted marketing for night-owls and early-birds to boost sales during Late-Evenings and Mornings.
 
 - **Optimise Opening-Closing times:** It may be best practice to open at 11AM and close at 11PM to save costs and boost efficiency.
 
 - **Staffing Optimization:** During Peak days like Friday and Saturday ensure there are sufficient staff and resources available to meet the demand. You may want to consider increasing shifts, hire temporary workers, or adjust employee schedules to cover peak periods.
 
-- During Off-Peak Days like Sunday and Monday these days may be ideal for maintenance and training.
+  - During Off-Peak Days like Sunday and Monday these days may be ideal for maintenance and training.
 
 - **Seating Optimization:** Review seating arrangements to assess whether the layout can be adjusted to accommodate more guests or smaller parties without sacrificing comfort by maximizing table usage by having more smaller sized tables.
 
@@ -663,12 +663,11 @@ can boost sales by providing festive-themed products or seasonal discounts, such
 
 - The even distribution of sales across all 4 pizza categories indicates a well-rounded menu appeal, satisfying diverse customer preferences. This leads to stable revenue streams, minimizing reliance on any single category and reducing business risk.
 
-- There are 5 pizza sizes ranging from Small to XXLarge. Large Pizzas contributes the most revenue at 375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only 1K (0.12%). 
+- There are 5 pizza sizes ranging from Small to XXLarge. Large Pizzas contributes the most revenue at $375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only $1K (0.12%). 
 
 *Recommendations:*
 
-- **Menu Optimization:** It is worth considering to remove 
-'Brie Carre Pizza' from the menu altogether and focus on raising the minimum benchmark of 1,000 pizzas sold.
+- **Menu Optimization:** It is worth considering to remove 'Brie Carre Pizza' from the menu altogether and focus on raising the minimum benchmark of 1,000 pizzas sold.
 
 - **Re-evaluate X-Large & XX-Large Pizzas:** The combined revenue from both sizes is extremely low, contributing less than 2% to overall revenue. It may not be worth continuing production to reduce costs.
 
