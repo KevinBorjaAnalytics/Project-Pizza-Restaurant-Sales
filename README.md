@@ -1,6 +1,10 @@
 # Project Pizza Restaurant Sales
  In this project I would like to showcase my technical skills using SQL & Power BI, as well as leveraging a multitude of soft-skills such as problem-solving and critical-thinking to achieve business objectives.
 
+Check out SQL Queries: [SQL queries](/SQL%20queries/)
+
+Check out Power BI Dashboard: [Pizza Sale Dashboard](/Dashboard/)
+
 ## Table of Contents
 - [Project Pizza Restaurant Sales](#project-pizza-restaurant-sales)
   - [Table of Contents](#table-of-contents)
