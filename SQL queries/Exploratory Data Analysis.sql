@@ -1,5 +1,8 @@
 -- EXPLORATORY DATA ANALYSIS
 -- 1. What days and times do we tend to be busiest?
+-- total orders = 48620
+SELECT COUNT(order_id) AS total_orders FROM orders;
+
 -- busiest days
 SELECT 
     DISTINCT days_of_week,

@@ -1,32 +1,51 @@
 # Project Pizza Restaurant Sales
- SQL & Power Bi Data Analysis
+ SQL & Power BI Data Analysis
 
 ## Table of Contents
 - [Project Pizza Restaurant Sales](#project-pizza-restaurant-sales)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction:](#1-introduction)
-      - [1.1 Company Background](#11-company-background)
-  - [2. PREPARE Phase](#2-prepare-phase)
-      - [2.1 Data Used](#21-data-used)
-      - [2.2 Accessibility \& Usage of Data](#22-accessibility--usage-of-data)
-      - [2.3 Data Limitations \& Integrity](#23-data-limitations--integrity)
+    - [1.1 Company Background](#11-company-background)
+  - [2. Prepare Phase](#2-prepare-phase)
+    - [2.1 Data Used](#21-data-used)
+    - [2.2 Accessibility \& Usage of Data](#22-accessibility--usage-of-data)
+    - [2.3 Data Limitations \& Integrity](#23-data-limitations--integrity)
     - [2.4 Tools and Methodologies](#24-tools-and-methodologies)
-      - [Tools:](#tools)
-  - [3. Prepare Phase](#3-prepare-phase)
-      - [3.1 Data Preparation](#31-data-preparation)
-      - [3.2 Data cleaning](#32-data-cleaning)
-      - [3.2 Data Normalization](#32-data-normalization)
-      - [3.3 Data Transformation](#33-data-transformation)
+  - [3. Process Phase](#3-process-phase)
+    - [3.1 Data Preparation](#31-data-preparation)
+    - [3.2 Data cleaning](#32-data-cleaning)
+    - [3.3 Data Normalization](#33-data-normalization)
+    - [3.4 Data Transformation](#34-data-transformation)
   - [4. Exploratory Data Analysis (EDA)](#4-exploratory-data-analysis-eda)
-      - [4.1 Business Task](#41-business-task)
+    - [4.1 Business Task](#41-business-task)
+      - [1. What days and times do we tend to be busiest?](#1-what-days-and-times-do-we-tend-to-be-busiest)
+      - [2. How many pizzas are we making during peak periods?](#2-how-many-pizzas-are-we-making-during-peak-periods)
+      - [3. What are our best and worst-selling pizzas?](#3-what-are-our-best-and-worst-selling-pizzas)
+      - [4. What's our average order value?](#4-whats-our-average-order-value)
+      - [5. How well are we utilizing our seating capacity?](#5-how-well-are-we-utilizing-our-seating-capacity)
+  - [5. Further Analysis](#5-further-analysis)
+    - [5.1 Sales Analysis](#51-sales-analysis)
+      - [1. Month Over Month Growth Rates?](#1-month-over-month-growth-rates)
+      - [2. What Pizza Category Generates the most revenue?](#2-what-pizza-category-generates-the-most-revenue)
+      - [3. What Pizza Size Generates the most revenue?](#3-what-pizza-size-generates-the-most-revenue)
+  - [6. Conclusion \& Recommendations](#6-conclusion--recommendations)
 
 ## 1. Introduction: 
-#### 1.1 Company Background
-For the Maven Pizza Challenge, you’ll be playing the role of a BI Consultant hired by Plato's Pizza, a Greek-inspired pizza place in New Jersey. You've been hired to help the restaurant use data to improve operations, and just received the following note:
+### 1.1 Company Background
+For the Maven Pizza Challenge, you’ll be playing the role of a 
+BI Consultant hired by Plato's Pizza, a Greek-inspired pizza 
+place in New Jersey. You've been hired to help the restaurant 
+use data to improve operations, and just received the following 
+note:
 
 Welcome aboard, we're glad you're here to help!
 
-Things are going OK here at Plato's, but there's room for improvement. We've been collecting transactional data for the past year, but really haven't been able to put it to good use. Hoping you can analyze the data and put together a report to help us find opportunities to drive more sales and work more efficiently.
+Things are going OK here at Plato's, but there's room for 
+improvement. We've been collecting transactional data for the 
+past year, but really haven't been able to put it to good use. 
+Hoping you can analyze the data and put together a report to 
+help us find opportunities to drive more sales and work more 
+efficiently.
 
 Here are some questions that we'd like to be able to answer:
 
@@ -37,18 +56,20 @@ Here are some questions that we'd like to be able to answer:
 - How well are we utilizing our seating capacity? (we have 15 tables and 60 seats)
 
 That's all I can think of for now, but if you have any other ideas I'd love to hear them – you're the expert!
+
 Thanks in advance,
 
 Mario Maven (Manager, Plato's Pizza) 
 
-## 2. PREPARE Phase
-#### 2.1 Data Used 
-The data source used for this Project is https://www.kaggle.com/datasets/shilongzhuang/pizza-sales. This dataset was downloaded from Kaggle where it was uploaded by Shi Long Zhuang.
+## 2. Prepare Phase
+### 2.1 Data Used 
+The data source used for this Project is https://www.kaggle.com/datasets/shilongzhuang/pizza-sales.
+This dataset was downloaded from Kaggle where it was uploaded by Shi Long Zhuang.
 
-#### 2.2 Accessibility & Usage of Data 
+### 2.2 Accessibility & Usage of Data 
 This public dataset is completely available on the Maven Analytics website platform where it stores and consolidates all available datasets for analysis in the Data Playground. The specific individual datasets at hand can be obtained at this link below: https://www.mavenanalytics.io/blog/maven-pizza-challenge
 
-#### 2.3 Data Limitations & Integrity
+### 2.3 Data Limitations & Integrity
 This Pizza Sales dataset contains 12 columns and a total of 48620 records:
 - **order_id**: Unique identifier for each order placed by a table.
 - **order_details_id**: Unique identifier for each order placed by a table.
@@ -62,39 +83,43 @@ This Pizza Sales dataset contains 12 columns and a total of 48620 records:
 - **pizza_type**: Unique key identifier that ties the pizza ordered to its details, like size and price.
 - **pizza_ingredients**: Ingredients used in the pizza as shown in the menu (they all include Mozzarella Cheese, even if not specified; and they all include Tomato Sauce, unless another sauce is specified).
 
-
 The data is clean and well-maintained but somewhat limited:
 
 There is not enough information to conduct an in-depth Inventory Analysis which provides real-time insights into inventory levels, stock movements, and related metrics that help to optimize supply chain operations and minimize costs which can ensure efficient stock levels.
 
-There is also no Customer information for Customer Segmentation Analysis, a process of dividing a company's customers into groups based on shared characteristics to better tailor marketing and sales efforts.
-
-Inefficient inventory management leading to overstocking or wastage.
-Difficulty in adjusting pricing dynamically to capture peak demand periods.
-Limited understanding of customer behavior, hindering targeted marketing efforts.
+There is also no Customer information for Customer Segmentation Analysis, a process of dividing a company's customers into groups based on shared characteristics to better tailor marketing and sales efforts. So there may be limited understanding of customer behavior, hindering targeted marketing efforts.
 
 ### 2.4 Tools and Methodologies
-#### Tools:
-- MYSQL Workbench is the tool that will be used to create a database Schema for the Pizza Restaurant Sales dataset.
-Here we will take the appropriate cleaning procedures if necessary and normalise the data.
-Once the data preparation process is taken care of we will undergo Exploratory Data Analysis (EDA) by querying the data to gain valuable insights.
+*Tools:*
 
-- POWER BI will be used for visualizations and to build a Dashboard
+**MYSQL:** Our Database Management System used for preparing and querying the data for Exploratory Date Analysis.
 
-Data analysis was conducted using Python for statistical computations and Tableau for visualizations. The methodologies included correlation analysis, linear regression, and cluster analysis to identify patterns and draw insights.
+**Power BI:** Our BI tool for building a dashboard and any other visualizations.
 
-## 3. Prepare Phase
-#### 3.1 Data Preparation 
-We start off by creating a new database called **pizza_db** in MYSQL and import the relevant csv file in which all 48620 records were successfully imported.
-- One thing to note is that the **order_date** and **order_time** columns are set as **TEXT** datatypes.
-- The Second thing to note is that **unit_price** and **total_price** columns are set as **DOUBLE** datatype.
+**Git & GitHub:** Crucial for version control and sharing
+SQL scripts and analysis, ensuring project tracking and potential collaboration.
 
-#### 3.2 Data cleaning
-As mentioned before the data is clean and well-maintained, there is not duplicates or empty values,
-so we begin by standardizing the data:
+**Visual Studio Code:** For managing Git repositories committing changes, and handling branches.
 
-Firstly we set the **order_date** and **order_time** columns into the standard format MYSQL uses,
-and then we correct the datatype from **TEXT** to **DATE/TIME**.
+*Methodolgies:*
+
+**Descriptive analysis:** Our main focus here is to describe, summarize, interpret, and present the main features (characteristics, patterns, and trends) of the dataset in a meaningful way without drawing conclusions beyond the data itself.
+
+**Time-series analysis:** Here we will identify trends over time and seasonal patterns, to draw insights.
+
+## 3. Process Phase
+### 3.1 Data Preparation 
+We start off by creating a new database called **pizza_db** in MYSQL and import the relevant csv file in which all 48620 
+records were successfully imported. Something to note:
+- The **order_date** and **order_time** 
+columns are set as **TEXT** datatypes.
+- The **unit_price** and **total_price** 
+columns are set as **DOUBLE** datatype.
+
+### 3.2 Data cleaning
+As mentioned before the data is clean and well-maintained, there is not duplicates or empty values, so we begin by standardizing the data:
+
+Firstly we set the **order_date** and **order_time** columns into the standard format MYSQL uses, and then we correct the datatype from **TEXT** to **DATE/TIME**.
 
 Secondly, we set the **unit_price** and **total_price** columns as **DECIMAL** datatype.
 
@@ -109,12 +134,12 @@ ALTER TABLE pizza_sales MODIFY order_time TIME;
 ALTER TABLE pizza_sales MODIFY unit_price DECIMAL(10, 2);
 ALTER TABLE pizza_sales MODIFY total_price DECIMAL(10, 2);
 ```
-#### 3.2 Data Normalization
-WE organize the data into multiple related tables to reduce redundancy and improve data integrity.
+### 3.3 Data Normalization
+We organize the data into multiple related tables to improve data integrity and reduce redundancy.
 
-1. Order Table: Tracks order information, like date and time.
-2. Order Details Table: Links specific pizzas to an order, including quantity and prices.
-3. Pizza Table: Stores pizza-specific details such as size, type, and ingredients.
+1. **Order Table:** Tracks order information, like date and time.
+2. **Pizza Table:** Stores pizza-specific details such as size, type, and ingredients.
+3. **Order Details Table:** Links specific pizzas to an order, including quantity and prices.
 
 ```sql
 CREATE TABLE Orders (
@@ -183,10 +208,9 @@ JOIN Pizzas p ON ps.order_details_id = p.pizza_id;
 ![alt text](assets/orderdetail_table.png)
 
 
-#### 3.3 Data Transformation
+### 3.4 Data Transformation
 <details>
-<summary>In this section we fine-tune the data for visualization
-and analysis purposes.
+<summary>In this section we fine-tune the data for visualization and analysis purposes.
 </summary>
 
 ```sql
@@ -237,12 +261,18 @@ END;
 </details>
 
 ## 4. Exploratory Data Analysis (EDA)
-#### 4.1 Business Task
-In this section we will be focusing on the main task of providing answers to the specific questions given.
+### 4.1 Business Task
+In this section we will be focusing on the main task of providing answers to the specific questions given by Plato's Pizza.
 
-1. What days and times do we tend to be busiest?
+#### 1. What days and times do we tend to be busiest?
+The metric used determine how busy the restaurant is, will be the number of total orders. 
 
-**Busiest Days Results:**
+```SQL
+SELECT COUNT(order_id) AS total_orders FROM orders;
+```
+![alt text](assets/total_orders.png)
+
+**1.1 Busiest Days?**
 
 ```sql
 SELECT 
@@ -259,11 +289,9 @@ ORDER BY total_orders DESC;
 Friday appears to be the busiest day throughout the year and
 Sunday the least busiest day.
 
-Trend: Total Orders progressively increase from the start of the
-week, Monday, and peaks Friday-Saturday, and diminishes at the 
-end of the week on Sunday.
+**Trend:** Total Orders progressively increase from the start of the week, Monday, and peaks Friday-Saturday, and diminishes at the end of the week on Sunday.
 
-**Busiest Times Results:**
+**1.2 Busiest Times?**
 
 ```sql
 SELECT 
@@ -277,13 +305,11 @@ ORDER BY total_orders DESC;
 ![alt text](assets/1_busiest_times.png)
 
 **Insight:**
-12 PM is busiest Time throughout the year and
-09 AM the least busiest Time (not shown in the image).
+Lunch time (12PM to 3PM) and Dinner time (6PM to 8PM) appear to be the most popular hours.
 
-Trend: Lunch time (12 PM to 3PM) and Dinner time (6PM to 8PM)
-appear to be the most popular hours.
+On the other hand, Early Mornings (09AM to 10AM) and Late-night (11PM) make up a total of 89 orders out of 48,620 making them the least popular hours.
 
-**Busiest Day and time Results:**
+**1.3 Busiest Day and time?**
 
 ```sql
 -- busiest times across the week (day + hour breakdown)
@@ -297,15 +323,40 @@ ORDER BY total_orders DESC;
 ```
 
 ![alt text](assets/1_busiest_day_and_time.png)
+*Top 10 results out of 95 rows*
 
 **Insight:**
-Thursday at 12 PM is the busiest Time throughout the year and 
-Sunday 10 AM the least busiest Time (not shown in image).
+Thursday at 12PM is the busiest time throughout the year 
+and Sunday at 10AM is the least busiest Time (not shown in image). This further suggests that regardless of the day, the hours between 12PM and 1PM are peak times for pizza orders.
 
-Trend: Regardless of the day, the hours between 12 PM and 1 PM 
-are the peak times for pizza orders.
+What does all this mean in terms of revenue?
 
-**Busiest Month:**
+![alt text](assets/Revenue_day_by_hour.png)
+*from pizza sales Dashboard*
+
+In the peak hours of 12PM and 1PM where the restaurant is most busiest a total Revenue of $217,944 was generated.
+
+The least busiest hours; 09AM, 10AM, and 11PM make a combined total revenue of $1,508 of $817,859.
+
+**Recommendations:**
+
+**Optimise Opening-Closing times:**
+It may be best practice to open at 11AM and close at 11PM to save costs and boost efficiency.
+
+**Staffing Optimization:**
+During Peak days like Friday and Saturday ensure there are 
+sufficient staff and resources available to meet the demand. 
+You may want to consider increasing shifts, hire temporary workers, or adjust employee schedules to cover peak periods.
+
+During Off-Peak Days like Sunday and Monday these days may be ideal for maintenance and training.
+
+**Marketing & Promotions:**
+Running time-sensitive promotions during Peak times can help 
+maximize sales by offering Lunch time or Dinner time discounts.
+
+There's also the opportunity to drive sales through combo deals to help upsell or cross-sell during peak hours.
+
+**Busiest Month?**
 
 ```sql
 SELECT 
@@ -318,11 +369,17 @@ ORDER BY total_orders DESC;
 ![alt text](assets/1_busiest_month.png)
 
 **Insight:**
-Although July is the peak month for orders, there doesn't seem 
-to be a distinct seasonal pattern, as eight out of the twelve 
-months have recorded over 4,000 total orders.
+Although July is the peak month for orders, there doesn't seem to be a distinct seasonal pattern as total orders fluctuates by month. This means that sales are unaffected my seasonal change or holidays.
 
-1. How many pizzas are we making during peak periods?
+Eight out of the twelve months have recorded over 4,000 
+total orders which is a good indicator of steady demand throughout the year.
+
+**Recommendations:**
+
+**Marketing & Promotions:**
+Seasonal promotions during occasions like Christmas, New Year, Easter, and Halloween can boost sales by providing festive-themed products or seasonal discounts, such as Winter Sales.
+
+#### 2. How many pizzas are we making during peak periods?
 
 ```sql
 SELECT
@@ -337,9 +394,24 @@ ORDER BY number_of_pizzas_sold DESC;
 ![alt text](assets/2_pizzas_made_peak_period.png)
 
 **Insight:**
-Lunch time (12PM to 3 PM) peaks at the top with 16802 pizzas made.
 
-1. What are our best and worst-selling pizzas?
+- **Peak Periods:** Lunch Time (12PM to 3PM) and Dinner Time (6PM to 9PM) have the highest demand for pizza. This may be due to the fact most people don't skip these meal times. Another reason may be because pizza is considered a convenient meal or a comfort pick. 
+
+- **Afternoon Sales:** 12,666 pizzas sold in the afternoon indicate strong demand between 3PM to 6PM. This amount is nearly on par with dinner sales, with only 691 pizzas separating the two periods.
+
+- High demand may be due to the fact that the Afternoon is between Lunch and Dinner, which could suggest a robust snack culture, people who take late lunches, or a tendency for early dinners.
+
+- **Least Popular Periods:** Late Evening demand drops significantly down to 3,999, while Morning demand have also dipped to 2,750. This decline could be because pizza isn't typically a popular option for late-night or early-morning meals.
+
+**Recommendations:**
+
+- **Menu Expansion:** 
+Introduce breakfast-friendly or late-night-friendly pizza options to increase demand during these periods.
+
+- **Marketing & Promotion:** Similarly, as mentioned before 
+time-sensitive promotions can help boost sales. Consider targeted marketing for night-owls and early-birds to boost sales during Late-Evenings and Mornings.
+
+#### 3. What are our best and worst-selling pizzas?
 
 **Best Selling Pizzas:**
 
@@ -361,7 +433,6 @@ Although the best selling pizza is the 'Classic Deluxe Pizza'
 with 2453 pizzas sold, the top four pizzas have achieved 
 comparable sales, each exceeding 4,000 units sold.
 
-
 **Worst Selling Pizzas:**
 
 ```sql
@@ -377,12 +448,12 @@ LIMIT 5;
 ![alt text](assets/3_worst_selling_pizza.png)
 
 **Insight:**
-The 'Brie Carre Pizza' has consistently been the least popular 
-option, with just 490 sold over the entire year. Additionally, 
-the next four pizzas on the list have also struggled, 
-failing to reach the 1,000 pizza sales mark.
+The 'Brie Carre Pizza' has consistently been the least popular option, with just 490 sold over the entire year. Additionally, the next four pizzas on the list have also struggled, failing to reach the 1,000 pizza sales mark.
 
-1. What's our average order value?
+**Recommendation:**
+It is worth considering to remove 'Brie Carre Pizza' from the menu altogether and focus on raising the minimum quantity of Pizzas sold over the 1,000 pizzas sold benchmark.
+
+#### 4. What's our average order value?
 
 ```sql
 SELECT 
@@ -395,25 +466,23 @@ JOIN orders o ON od.order_id = o.order_id;
 ![alt text](assets/4_average_order_value.png)
 
 **Insight:**
-The Average Order Value is 16.82. This appears to be on the lower
-side, especially when the cheapest item is priced at 9.75 and the
-most expensive is 35.95, resulting in a difference of 26.20.
+The Average Order Value is 16.82. This appears to be on the lower side, especially when the cheapest item is priced at 9.75 and the most expensive is 35.95, resulting in a difference of 26.20.
 
 It seems that customers typically order one pizza and often 
 opt for the more affordable options.
 
-1. How well are we utilizing our seating capacity? 
+**recommendation:**
+Highlight Affordable Options: Feature your best-value pizzas 
+prominently on the menu, making it easier for customers to find and choose them.
+
+#### 5. How well are we utilizing our seating capacity? 
 (we have 15 tables and 60 seats)
 
 To undercover how effectively the seating capacity is being 
-utilized without a dedicated dataset to provide this information
-we must first must make a few assumptions in order to reach an
-accurate estimation.
+utilized without a dedicated dataset to provide this information we must first must make a few assumptions in order to reach an accurate estimation.
 
-Secondly, using what we know; July (month), Friday (day), and 
-12 PM (hour) are the busiest periods in their respective
-segmentations. Therefore, we have picked '2015-07-17' which contains
-all the busiest periods in one date.
+Secondly, using what we know; July (month), Friday (day), and 12 PM (hour) are the busiest periods in their respective
+segmentations. Therefore, we have picked '2015-07-17' which contains all the busiest periods in one date.
 
 **Ultilizing Seating Capacity Based On Number Of Table:**
 
@@ -434,8 +503,7 @@ GROUP BY order_date, hours;
 ![alt text](assets/5_seating_capacity_tables.png)
 
 **Insight:**
-During the peak season, only 13 of the 15 tables are currently
-in use, amounting to 86%.
+During the busiest period, only 13 of the 15 tables are being used, amounting to 86% use rate.
 
 **Ultilizing Seating Capacity Based On Average Party Size Per Order:**
 
@@ -457,11 +525,155 @@ GROUP BY order_date, hours;
 ![alt text](assets/5_seating_capacity_seats.png)
 
 **Insight:**
-Approximately only 54% of seats are being occupied during peak
-season, with the assumption that the average group per order 
-is 2.5 people.
+Approximately only 54% of seats are being occupied during peak season, with the assumption that the average group per order is 2.5 people.
 
+**Recommendation:**
 With 15 tables available and a total of 60 seats, it is
 reasonable to conclude that each table accommodates 4 people.
-It might be worthwhile to think about introducing additional 
-tables with 2 or 3 seats and removing a few tables with 4 seats.
+It might be worthwhile reviewing seating Arrangements to assess whether the layout can be adjusted to accommodate more guests or smaller parties without sacrificing comfort.
+
+- Maximize table usage by having more smaller sized tables.
+
+## 5. Further Analysis
+
+Previously, we mainly focused on answering the specific questions at hand. In this section we will be combining SQL queries and a Pizza Sales Dashboard created in Power Bi; Highlighting key metrics and visualizations to uncover more insights.
+
+### 5.1 Sales Analysis
+
+![alt text](assets/pizza_dashboard.png)
+
+#### 1. Month Over Month Growth Rates?
+
+```sql
+WITH monthly_revenue AS (
+    SELECT 
+        DATE_FORMAT(order_date, '%m') AS `month`,
+        SUM(total_price) AS total_revenue
+    FROM orders o
+    JOIN orderdetails od ON o.order_id = od.order_id
+    GROUP BY DATE_FORMAT(order_date, '%m')
+)
+SELECT 
+    `month`,
+    total_revenue,
+    LAG(total_revenue) OVER (ORDER BY `month`) AS prev_revenue,
+    ROUND(((total_revenue - LAG(total_revenue) OVER (ORDER BY `month`)) 
+            / LAG(total_revenue) OVER (ORDER BY `month`)) * 100, 2) AS mom_growth
+FROM monthly_revenue
+ORDER BY `month`;
+```
+
+![alt text](assets/mom_growth_table.png)
+
+![alt text](assets/revenue_by_month.png)
+
+**Insight:**
+There is no noticeable deviation from the average value (68.16k).
+- **Strong Growth Period:** November had the highest growth at 9.95%
+- **Significant Drops:** December has the highest decline in revenue at -8.09%.
+
+None of which exceed the 10% mark, indicating stable stream of revenue flowing in.
+
+#### 2. What Pizza Category Generates the most revenue?
+
+![alt text](assets/pizza_category_revenue.png)
+*from Pizza Sales Dashboard*
+
+**Insight:**
+The Classic Pizzas brings in the highest revenue, making up 26.91% of the total earnings, whereas the Veggie Pizzas bring in the least amount of revenue with 23.68% of revenue made. That is 3.23% variance which denotes that revenue distribution across pizza categories are relatively even.
+
+**Balanced Customer Demand:** 
+The even distribution implies that no particular category 
+significantly dominates sales, indicating a well-rounded menu appeal.
+
+**Diverse Customer Preferences:** 
+Customers have diverse preferences, leading to a steady demand across all pizza categories.
+
+**Stable Revenue Streams:**
+Diverse and evenly distributed revenue streams ensure that the company doesn’t rely heavily on any one category, thus reducing overall risk.
+
+**Recommendation:**
+
+**Optimize Inventory Management:** Since demand is even, ensure inventory stock align with the balanced sales patterns to reduce waste and cost.
+
+#### 3. What Pizza Size Generates the most revenue?
+
+![alt text](assets/pizza_size_revenue.png)
+*from Pizza Sales Dashboard*
+
+**Insight:**
+Large Pizzas contributes the most revenue at 375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only 1K (0.12%). 
+
+**Optimizing Large and Medium Sizes:** 
+Large and Medium size pizzas account for 76.38% of total revenue. This suggests that they are the most popular and may have higher price points.
+
+**Small Pizzas Potential:** 
+Given that small pizzas account for more than 20% of revenue, we could explore the possibility of bundling them with other items on the menu (drinks or sides) to boost the average order value.
+
+**Re-evaluate X-Large & XX-Large Pizzas:** 
+The combined revenue from both sizes is extremely low, contributing less than 2% to overall revenue. It may not be worth continuing production to reduce costs.
+
+## 6. Conclusion & Recommendations
+Plato' Pizza main goal is to improve operations, drive more sales and work more efficiently. The transactional data provided by them contains information solely based on their pizza products.
+
+**Sales Performance Overview:**
+
+- During the entire year, July was the standout month, recording the highest total orders at 4,301 and generating the highest revenue of $73,000. On the other hand, October recoreded the lowest orders at 3797 and the lowest revenue of $64,028. That is a difference of 504 orders and $9,000 of revenue.
+
+- On average $68,000 was generated each month with November having the highest growth rate at 9.95% and December having the highest decline in revenue at -8.09%, none of which exceed the 10% mark.
+
+- Overall Revenue and orders are very stable throughout the year, 8 of 12 months have recorded over 4,000 total orders, suggesting demand is unaffected my seasonal change or holidays.
+
+*Recommendations:*
+
+- **Marketing & Promotions:** Seasonal promotions during occasions like Christmas, New Year, Easter, and Halloween
+can boost sales by providing festive-themed products or seasonal discounts, such as Winter Sales.
+
+- **Optimize Inventory Management:** Since demand is even, ensure inventory stock align with the balanced sales patterns to reduce waste and cost.
+
+**Efficieny Overview:**
+
+- Orders progressively increase from Monday, peak on Friday-Saturday, and diminishes on Sunday.
+
+- Demand for pizza peaks during Lunch Time (12PM to 3PM) and Dinner Time (6PM to 9PM), with the highest revenue generated during 12 PM and 1 PM ($217,944).
+
+- Demand for pizza is significantly lower during Late-evening and Early-morning hours, with just 89 orders placed from 9AM to 10AM and 11PM combined. These quieter times account for only a small fraction of revenue, totaling $1,508 out of $817,859.
+
+*Recommendations:*
+
+- **Menu Expansion:** Introduce breakfast-friendly or late-night-friendly pizza options to increase demand during these periods.
+
+- There's also the opportunity to drive sales through combo deals to help upsell or cross-sell during peak hours.
+
+- **Marketing & Promotions:** Running time-sensitive promotions during Peak times can help maximize sales by offering Lunch time or Dinner time discounts.
+
+- Consider targeted marketing for night-owls and early-birds to boost sales during Late-Evenings and Mornings.
+
+- **Optimise Opening-Closing times:** It may be best practice to open at 11AM and close at 11PM to save costs and boost efficiency.
+
+- **Staffing Optimization:** During Peak days like Friday and Saturday ensure there are sufficient staff and resources available to meet the demand. You may want to consider increasing shifts, hire temporary workers, or adjust employee schedules to cover peak periods.
+
+- During Off-Peak Days like Sunday and Monday these days may be ideal for maintenance and training.
+
+- **Seating Optimization:** Review seating arrangements to assess whether the layout can be adjusted to accommodate more guests or smaller parties without sacrificing comfort by maximizing table usage by having more smaller sized tables.
+
+**Product Performance Overview:**
+
+- The top 4 selling pizzas have comparable sales, each exceeding 4,000 units sold. Whereas, 'Brie Carre Pizza' has consistently been the least popular option, with just 490 sold over the entire year.
+
+- The even distribution of sales across all 4 pizza categories indicates a well-rounded menu appeal, satisfying diverse customer preferences. This leads to stable revenue streams, minimizing reliance on any single category and reducing business risk.
+
+- There are 5 pizza sizes ranging from Small to XXLarge. Large Pizzas contributes the most revenue at 375K (45.89%) and XXLarge Pizzas have the least revenue impact generating only 1K (0.12%). 
+
+*Recommendations:*
+
+- **Menu Optimization:** It is worth considering to remove 
+'Brie Carre Pizza' from the menu altogether and focus on raising the minimum benchmark of 1,000 pizzas sold.
+
+- **Re-evaluate X-Large & XX-Large Pizzas:** The combined revenue from both sizes is extremely low, contributing less than 2% to overall revenue. It may not be worth continuing production to reduce costs.
+
+- **Optimizing Large and Medium Sizes:** Large and Medium size pizzas account for 76.38% of total revenue. This suggests that they are the most popular and may have higher price points.
+
+- **Small Pizzas Potential:** Given that small pizzas account for more than 20% of revenue, explore the possibility of bundling them with other items on the menu (drinks or sides) to boost the average order value.
+
+- **Optimize Inventory Management:** Since demand is even, ensure inventory stock align with the balanced sales patterns to reduce waste and cost.
